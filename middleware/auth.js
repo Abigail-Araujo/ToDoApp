@@ -12,11 +12,10 @@ const userExtractor = async (request, response, next) =>{
             return response.sendStatus(401);
         }
         
-        
-        
         const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
         const user = await User.findById(decoded.id);
         request.user = user;
+        next();
         
     } catch (error) {
         
@@ -24,8 +23,6 @@ const userExtractor = async (request, response, next) =>{
 
     }
 
-
-next();
 };
 
 module.exports = { userExtractor }
